@@ -1,7 +1,7 @@
 <?php
 namespace App\Service\Models;
 
-class AbiRatingMultiplier implements MultiplierInterface
+class PostalRatingMultiplier implements MultiplierInterface
 {
     private $postal = "";
 

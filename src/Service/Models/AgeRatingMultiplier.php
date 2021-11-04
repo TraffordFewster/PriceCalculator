@@ -1,6 +1,8 @@
 <?php
 namespace App\Service\Models;
 
+use App\Service\Storage\Database;
+
 class AgeRatingMultiplier implements MultiplierInterface
 {
     private $age = "";
@@ -17,6 +19,13 @@ class AgeRatingMultiplier implements MultiplierInterface
 
     public function getMultiplier()
     {
-        return 2;
+        $sql = 'SELECT rating_factor
+                FROM age_rating
+                WHERE age = :age';
+        $db = new Database();
+        $query = $db->prepare($sql);
+        $query->execute([":age" => $this->age]);
+        $results = $query->fetchColumn();
+        return $results;
     }
 }

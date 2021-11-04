@@ -12,7 +12,7 @@ class PremiumController extends AbstractController
     #[Route('/premium', name: 'premium')]
     public function index(): Response
     {
-        $test = new \App\Service\Models\AbiRating("Yo");
+        $test = new \App\Service\Models\AgeRatingMultiplier("16");
         dump($test);
         dump($test->getMultiplier());
         return $this->json(["yo"=>"2"]);
