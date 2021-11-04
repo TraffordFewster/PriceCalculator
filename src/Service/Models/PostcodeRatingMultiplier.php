@@ -1,6 +1,8 @@
 <?php
 namespace App\Service\Models;
 
+use App\Service\Storage\Database;
+
 class PostalRatingMultiplier implements MultiplierInterface
 {
     private $postal = "";
@@ -12,11 +14,19 @@ class PostalRatingMultiplier implements MultiplierInterface
 
     public function setValue(string $value)
     {
-        $this->postal = $value;
+        $areaCode = explode(" ",$value)[0];
+        $this->postal = $areaCode;
     }
 
     public function getMultiplier()
     {
-        return 2;
+        $sql = 'SELECT rating_factor
+                FROM postcode_rating
+                WHERE postcode_area = :postcode';
+        $db = new Database();
+        $query = $db->prepare($sql);
+        $query->execute([":postcode" => $this->postal]);
+        $result = $query->fetchColumn();
+        return $result;
     }
 }
