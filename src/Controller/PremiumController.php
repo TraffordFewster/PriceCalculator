@@ -12,10 +12,9 @@ class PremiumController extends AbstractController
     #[Route('/premium', name: 'premium')]
     public function index(): Response
     {
-        dump(new \App\Service\Storage\Database);
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PremiumController.php',
-        ]);
+        $test = new \App\Service\Models\AbiRating("Yo");
+        dump($test);
+        dump($test->getMultiplier());
+        return $this->json(["yo"=>"2"]);
     }
 }
