@@ -1,15 +1,5 @@
 <?php
-/**
- * Premium endpoint controller.
- * The controller that manages the endpoint /premium
- * PHP Version 8.0.2
- * 
- * @category Controllers
- * @package  QuoteEngine
- * @author   Trafford Fewster <contact@trafford.dev>
- * @license  MIT https://opensource.org/licenses/MIT
- * @link     https://github.com/TraffordFewster/PriceCalculator
- */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Symfony Controller for /premium
  * A Symfony controller that manages the endpoint /premium
- * 
+ *
  * @category Controllers
  * @package  QuoteEngine
  * @author   Trafford Fewster <contact@trafford.dev>
@@ -41,6 +31,6 @@ class PremiumController extends AbstractController
         $test = new \App\Service\Models\AbiRatingMultiplier("PJ63 LXR");
         dump($test);
         dump($test->getMultiplier());
-        return $this->json(["yo"=>"2"]);
+        return $this->json(["yo" => "2"]);
     }
 }

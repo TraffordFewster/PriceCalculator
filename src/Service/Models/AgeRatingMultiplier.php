@@ -1,15 +1,5 @@
 <?php
-/**
- * Age Rating Multiplier
- * The Age Rating Multiplier class file.
- * PHP Version 8.0.2
- * 
- * @category Multipliers
- * @package  QuoteEngine
- * @author   Trafford Fewster <contact@trafford.dev>
- * @license  MIT https://opensource.org/licenses/MIT
- * @link     https://github.com/TraffordFewster/PriceCalculator
- */
+
 namespace App\Service\Models;
 
 use App\Service\Storage\Database;
@@ -17,7 +7,7 @@ use App\Service\Storage\Database;
 /**
  * AgeRatingMultiplier class
  * A simple class using the MultiplierInterface to provide the multiplier for Age
- * 
+ *
  * @category Multipliers
  * @package  QuoteEngine
  * @author   Trafford Fewster <contact@trafford.dev>
@@ -31,7 +21,7 @@ class AgeRatingMultiplier implements MultiplierInterface
     /**
      * Constructor
      * The constructor to setup the class.
-     * 
+     *
      * @param string $age The age to check.
      */
     public function __construct(string $age)
@@ -44,7 +34,7 @@ class AgeRatingMultiplier implements MultiplierInterface
      * Sets the value of the age.
      *
      * @param string $value the value to set the registration too
-     * 
+     *
      * @return void
      */
     public function setValue(string $value)
