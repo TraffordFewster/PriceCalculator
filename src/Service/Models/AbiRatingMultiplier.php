@@ -1,22 +1,62 @@
 <?php
+/**
+ * AbiRatingMultiplier
+ * The ABI Rating Multiplier class file.
+ * PHP Version 8.0.2
+ * 
+ * @category Multipliers
+ * @package  QuoteEngine
+ * @author   Trafford Fewster <contact@trafford.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://github.com/TraffordFewster/PriceCalculator
+ */
 namespace App\Service\Models;
 
 use App\Service\Storage\Database;
-
+/**
+ * AbiRatingMultiplier class
+ * A simple class using the MultiplierInterface to provide the multiplier for ABI 
+ * based on a reg.
+ * 
+ * @category Multipliers
+ * @package  QuoteEngine
+ * @author   Trafford Fewster <contact@trafford.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://github.com/TraffordFewster/PriceCalculator
+ */
 class AbiRatingMultiplier implements MultiplierInterface
 {
     private $_regNo = "";
-
+    /**
+     * Constructor
+     * The constructor to setup the class.
+     * 
+     * @param string $regNo The registration number.
+     */
     public function __construct(string $regNo)
     {
         $this->setValue($regNo);
     }
 
+    /**
+     * Set Value
+     * Sets the value of the registration.
+     *
+     * @param string $value the value to set the registration too
+     * 
+     * @return void
+     */
     public function setValue(string $value)
     {
         $this->_regNo = $value;
     }
 
+    /**
+     * Get Multiplier
+     * Gets the multiplier for the ABI based on the registration.
+     *
+     * @return float
+     */
     public function getMultiplier()
     {
         $ch = curl_init();
