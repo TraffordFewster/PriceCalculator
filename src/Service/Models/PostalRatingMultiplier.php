@@ -5,8 +5,9 @@ namespace App\Service\Models;
 use App\Service\Storage\Database;
 
 /**
- * AgeRatingMultiplier class
- * A simple class using the MultiplierInterface to provide the multiplier for Age
+ * PostalRatingMultiplier class
+ * A simple class using the MultiplierInterface to provide the multiplier for Postal
+ * Codes.
  *
  * @category Multipliers
  * @package  QuoteEngine
@@ -14,30 +15,30 @@ use App\Service\Storage\Database;
  * @license  MIT https://opensource.org/licenses/MIT
  * @link     https://github.com/TraffordFewster/PriceCalculator
  */
-class AgeRatingMultiplier implements MultiplierInterface
+class PostalRatingMultiplier implements MultiplierInterface
 {
     /**
-     * Age
-     * Used to store the age that is checked for a multiplier.
+     * Postal Code
+     * Contains the area code that is used to check against the database for a multiplier.
      *
      * @var string
      */
-    private string $age = "";
+    private string $postal = "";
 
     /**
      * Constructor
      * The constructor to setup the class.
      *
-     * @param string $age The age to check.
+     * @param string $postal The postal code number.
      */
-    public function __construct(string $age)
+    public function __construct(string $postal)
     {
-        $this->setValue($age);
+        $this->setValue($postal);
     }
 
     /**
      * Set Value
-     * Sets the value of the age.
+     * Sets the value of the areaCode based on a postal code.
      *
      * @param string $value the value to set the registration too
      *
@@ -45,23 +46,24 @@ class AgeRatingMultiplier implements MultiplierInterface
      */
     public function setValue(string $value)
     {
-        $this->age = $value;
+        $areaCode = explode(" ", $value)[0];
+        $this->postal = $areaCode;
     }
 
     /**
      * Get Multiplier
-     * Gets the multiplier for the age provided.
+     * Gets the multiplier for the area code based on the postal code provided.
      *
      * @return float
      */
     public function getMultiplier()
     {
         $sql = 'SELECT rating_factor
-                FROM age_rating
-                WHERE age = :age';
+                FROM postcode_rating
+                WHERE postcode_area = :postcode';
         $db = new Database();
         $query = $db->prepare($sql);
-        $query->execute([":age" => $this->age]);
+        $query->execute([":postcode" => $this->postal]);
         $result = $query->fetchColumn();
         return $result;
     }
