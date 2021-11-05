@@ -17,6 +17,12 @@ use App\Service\Storage\Database;
  */
 class PostalRatingMultiplier implements MultiplierInterface
 {
+    /**
+     * Postal Code
+     * Contains the area code that is used to check against the database for a multiplier.
+     *
+     * @var string
+     */
     private string $postal = "";
 
     /**

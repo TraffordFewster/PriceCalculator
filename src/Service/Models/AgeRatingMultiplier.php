@@ -16,6 +16,12 @@ use App\Service\Storage\Database;
  */
 class AgeRatingMultiplier implements MultiplierInterface
 {
+    /**
+     * Age
+     * Used to store the age that is checked for a multiplier.
+     *
+     * @var string
+     */
     private string $age = "";
 
     /**

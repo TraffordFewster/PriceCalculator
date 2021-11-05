@@ -17,6 +17,12 @@ use App\Service\Storage\Database;
  */
 class AbiRatingMultiplier implements MultiplierInterface
 {
+    /**
+     * Registration Number
+     * The registration number used to find and ABI code that is checked.
+     *
+     * @var string
+     */
     private string $regNo = "";
     /**
      * Constructor
