@@ -17,7 +17,7 @@ use App\Service\Storage\Database;
  */
 class AbiRatingMultiplier implements MultiplierInterface
 {
-    private $_regNo = "";
+    private string $regNo = "";
     /**
      * Constructor
      * The constructor to setup the class.
@@ -39,7 +39,7 @@ class AbiRatingMultiplier implements MultiplierInterface
      */
     public function setValue(string $value)
     {
-        $this->_regNo = $value;
+        $this->regNo = $value;
     }
 
     /**
@@ -54,7 +54,7 @@ class AbiRatingMultiplier implements MultiplierInterface
 
         curl_setopt($ch, CURLOPT_URL, $_ENV['ABI_API_ENDPOINT']);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, ['reg' => $this->_regNo]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ['reg' => $this->regNo]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);

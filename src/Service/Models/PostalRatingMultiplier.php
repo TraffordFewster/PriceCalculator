@@ -17,7 +17,7 @@ use App\Service\Storage\Database;
  */
 class PostalRatingMultiplier implements MultiplierInterface
 {
-    private $_postal = "";
+    private string $postal = "";
 
     /**
      * Constructor
@@ -41,7 +41,7 @@ class PostalRatingMultiplier implements MultiplierInterface
     public function setValue(string $value)
     {
         $areaCode = explode(" ", $value)[0];
-        $this->_postal = $areaCode;
+        $this->postal = $areaCode;
     }
 
     /**
@@ -57,7 +57,7 @@ class PostalRatingMultiplier implements MultiplierInterface
                 WHERE postcode_area = :postcode';
         $db = new Database();
         $query = $db->prepare($sql);
-        $query->execute([":postcode" => $this->_postal]);
+        $query->execute([":postcode" => $this->postal]);
         $result = $query->fetchColumn();
         return $result;
     }

@@ -16,7 +16,7 @@ use App\Service\Storage\Database;
  */
 class AgeRatingMultiplier implements MultiplierInterface
 {
-    private $_age = "";
+    private string $age = "";
 
     /**
      * Constructor
@@ -39,7 +39,7 @@ class AgeRatingMultiplier implements MultiplierInterface
      */
     public function setValue(string $value)
     {
-        $this->_age = $value;
+        $this->age = $value;
     }
 
     /**
@@ -55,7 +55,7 @@ class AgeRatingMultiplier implements MultiplierInterface
                 WHERE age = :age';
         $db = new Database();
         $query = $db->prepare($sql);
-        $query->execute([":age" => $this->_age]);
+        $query->execute([":age" => $this->age]);
         $result = $query->fetchColumn();
         return $result;
     }
