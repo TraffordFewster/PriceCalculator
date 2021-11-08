@@ -86,9 +86,8 @@ class MultiplierCalculator
         for ($i = 0; $i < count($this->multipliers); $i++) {
             $multi = $this->multipliers[$i];
             $total = round($total * $multi->getMultiplier(), 2);
-
-            $classNameWithNamespace = get_class($multi);
             $className = substr($multi::class, strrpos($multi::class, '\\') + 1);
+
             $details["multipliers"][$className] = [
                 "multiplier" => floatval($multi->getMultiplier()),
                 "newTotal" => $total
