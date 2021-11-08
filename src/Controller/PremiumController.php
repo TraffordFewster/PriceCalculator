@@ -5,6 +5,10 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\MultiplierCalculator;
+use App\Service\Models\AbiRatingMultiplier;
+use App\Service\Models\AgeRatingMultiplier;
+use App\Service\Models\PostalRatingMultiplier;
 
 /**
  * Symfony Controller for /premium
@@ -28,9 +32,20 @@ class PremiumController extends AbstractController
     #[Route('/premium', name: 'premium')]
     public function index(): Response
     {
-        $test = new \App\Service\Models\AbiRatingMultiplier("PJ63 LXR");
-        dump($test);
-        dump($test->getMultiplier());
-        return $this->json(["yo" => "2"]);
+        $data = [
+            "age" => 20,
+            "postcode" => "PE3 8AF",
+            "regNo" => "PJ63 LXR"
+        ];
+
+        $calculator = new MultiplierCalculator(500);
+        $calculator->addMultiplier(new AgeRatingMultiplier($data["age"]));
+        $calculator->addMultiplier(new PostalRatingMultiplier($data["postcode"]));
+        $calculator->addMultiplier(new AbiRatingMultiplier($data["regNo"]));
+
+        // dump($calculator->getTotal());
+        // dump($calculator->getDetails());
+
+        return $this->json($calculator->getDetails());
     }
 }
