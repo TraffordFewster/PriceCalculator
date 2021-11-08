@@ -58,7 +58,17 @@ class AbiRatingMultiplier implements MultiplierInterface
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $_ENV['ABI_API_ENDPOINT']);
+        /**
+         * The mock API just checks if the reg field is provided before returning the following
+         * object as JSON
+         * [
+         *     'success' => true,
+         *     'data' => [
+         *          'abicode' => '46545255'
+         *     ]
+         * ]
+         */
+        curl_setopt($ch, CURLOPT_URL, "https://trafford.dev/mock/abi.php");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, ['reg' => $this->regNo]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -68,10 +78,6 @@ class AbiRatingMultiplier implements MultiplierInterface
 
         $results = json_decode($server_output);
 
-        if (!$results->success) {
-            return 1;
-        }
-
         $sql = 'SELECT rating_factor
                 FROM abi_code_rating
                 WHERE abi_code = :abi_code';
@@ -79,6 +85,6 @@ class AbiRatingMultiplier implements MultiplierInterface
         $query = $db->prepare($sql);
         $query->execute([":abi_code" => $results->data->abicode]);
         $result = $query->fetchColumn();
-        return $result;
+        return $result || 1;
     }
 }

@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use App\Service\MultiplierCalculator;
 use App\Service\Models\AbiRatingMultiplier;
 use App\Service\Models\AgeRatingMultiplier;
@@ -22,29 +24,31 @@ use App\Service\Models\PostalRatingMultiplier;
  */
 class PremiumController extends AbstractController
 {
-    // #[Route('/premium', name: 'premium', methods: "POST")]
     /**
      * Premium Endpoint
      * The endpoint accepts post requests with age, postcode and reg number values.
      *
      * @return Response
      */
-    #[Route('/premium', name: 'premium')]
-    public function index(): Response
+    #[Route('/premium', name: 'premium', methods: "POST")]
+    public function index(Request $request): Response
     {
         $data = [
-            "age" => 20,
-            "postcode" => "PE3 8AF",
-            "regNo" => "PJ63 LXR"
+            "age" => filter_var($request->get("age"), FILTER_SANITIZE_NUMBER_INT),
+            "postcode" => filter_var($request->get("postcode"), FILTER_SANITIZE_STRING),
+            "regNo" => filter_var($request->get("regNo"), FILTER_SANITIZE_STRING)
         ];
+
+        foreach ($data as $key => $value) {
+            if (!$value) {
+                throw new UnprocessableEntityHttpException("Please provide a valid $key value!");
+            }
+        }
 
         $calculator = new MultiplierCalculator(500);
         $calculator->addMultiplier(new AgeRatingMultiplier($data["age"]));
         $calculator->addMultiplier(new PostalRatingMultiplier($data["postcode"]));
         $calculator->addMultiplier(new AbiRatingMultiplier($data["regNo"]));
-
-        // dump($calculator->getTotal());
-        // dump($calculator->getDetails());
 
         return $this->json($calculator->getDetails());
     }

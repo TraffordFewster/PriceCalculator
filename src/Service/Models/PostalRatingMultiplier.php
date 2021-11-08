@@ -65,6 +65,6 @@ class PostalRatingMultiplier implements MultiplierInterface
         $query = $db->prepare($sql);
         $query->execute([":postcode" => $this->postal]);
         $result = $query->fetchColumn();
-        return $result;
+        return $result || 1;
     }
 }

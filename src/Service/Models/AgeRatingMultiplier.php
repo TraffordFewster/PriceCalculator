@@ -63,6 +63,6 @@ class AgeRatingMultiplier implements MultiplierInterface
         $query = $db->prepare($sql);
         $query->execute([":age" => $this->age]);
         $result = $query->fetchColumn();
-        return $result;
+        return $result || 1;
     }
 }
